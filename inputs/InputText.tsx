@@ -50,9 +50,6 @@ export default function InputText({
             ] as any
           }
           multiline={multiline}
-          onContentSizeChange={(event) => {
-            setHeight(Math.min(120, event.nativeEvent.contentSize.height + 20)); // Max height of 120
-          }}
         />
       )}
     />
@@ -61,7 +58,7 @@ export default function InputText({
 
 const styles = StyleSheet.create({
   input: {
-    minHeight: 40,
+    minHeight: 20,
     borderRadius: 10,
     padding: 10,
     fontSize: 16,

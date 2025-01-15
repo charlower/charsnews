@@ -1,5 +1,4 @@
-const BASE_URL = 'newsapi.org/v2/';
-// TODO: move key
+const BASE_URL = 'https://newsapi.org/v2/';
 
 export const fetcher = async (endpoint: string, options: RequestInit = {}) => {
   const url = `${BASE_URL}${endpoint}`;
@@ -21,6 +20,7 @@ export const fetcher = async (endpoint: string, options: RequestInit = {}) => {
 
   if (!response.ok) {
     const error = await response.json();
+    console.log(error);
     throw new Error(error?.message || `HTTP error! status: ${response.status}`);
   }
 

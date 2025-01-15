@@ -10,6 +10,7 @@ export function useSearchNews(query: string) {
   } = useQuery<any>({
     queryKey: ['news'],
     queryFn: () => searchNews(query),
+    enabled: false,
   });
 
   return { news, errorNews, isFetchingNews, refetchNews };

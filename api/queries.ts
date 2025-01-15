@@ -1,8 +1,12 @@
 import { fetcher } from './fetcher';
-const KEY = '183daca270264bad86fc5b72972fb82a';
+const KEY = 'd79188f1b69d4611af7442753d3941d3';
 
 export const searchNews = async (query: string) => {
-  const endpoint = `/everything?q=${encodeURIComponent(query)}&apiKey=${KEY}`;
+  const endpoint = `/everything?q=${encodeURIComponent(
+    query
+  )}&from=2025-01-14&sortBy=popularity&apiKey=${KEY}`;
+
+  console.log('search');
 
   const options = {
     method: 'GET',

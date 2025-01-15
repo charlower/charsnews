@@ -9,19 +9,20 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { InputText } from '@/inputs';
 
-import { useLoadingMessages } from '@/hooks';
+import { useSearchNews } from '@/hooks';
 
 export default function HomeScreen() {
-  const [searching, setSearching] = useState(false);
+  // const [searching, setSearching] = useState(false);
   const { control, getValues, watch, setValue } = useForm({
     defaultValues: { query: '' },
   });
-
   const q = watch('query');
-  const showLoadingMessages = useLoadingMessages(searching);
+
+  const { news, isFetchingNews, errorNews, refetchNews } = useSearchNews(q);
 
   async function handleSearch() {
-    return;
+    if (!q) return;
+    await refetchNews();
   }
 
   return (
@@ -41,16 +42,21 @@ export default function HomeScreen() {
       <InputText
         name='query'
         control={control}
-        placeholder={
-          searching ? showLoadingMessages : `Search news. I hope it's happy!`
-        }
+        placeholder={`Search news. I hope it's happy!`}
+        multiline={false}
       />
       <Button
         title='Search!'
-        isDisabled={q.length === 0 || searching}
-        isLoading={searching}
+        isDisabled={q.length === 0 || isFetchingNews}
+        isLoading={isFetchingNews}
         onPress={handleSearch}
       />
+      {news?.totalResults > 0 &&
+        news.articles.map((article: any, index: number) => (
+          <ThemedText key={index + article.publishedAt}>
+            {article.title}
+          </ThemedText>
+        ))}
     </ParallaxScrollView>
   );
 }
