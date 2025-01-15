@@ -12,8 +12,7 @@ import { InputText } from '@/inputs';
 import { useSearchNews } from '@/hooks';
 
 export default function HomeScreen() {
-  // const [searching, setSearching] = useState(false);
-  const { control, getValues, watch, setValue } = useForm({
+  const { control, watch } = useForm({
     defaultValues: { query: '' },
   });
   const q = watch('query');
@@ -25,11 +24,9 @@ export default function HomeScreen() {
     await refetchNews();
   }
 
-  console.log(news?.articles[0]);
-
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#f1f1f1', dark: '#000' }}
       headerImage={
         <Image
           source={require('@/assets/images/partial-react-logo.png')}
