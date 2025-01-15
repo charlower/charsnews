@@ -125,5 +125,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     gap: 5,
+    minHeight: 55,
   },
 });

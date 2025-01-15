@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
 
 import Button from '@/components/Button';
@@ -24,6 +24,8 @@ export default function HomeScreen() {
     if (!q) return;
     await refetchNews();
   }
+
+  console.log(news?.articles[0]);
 
   return (
     <ParallaxScrollView
@@ -51,13 +53,27 @@ export default function HomeScreen() {
         isLoading={isFetchingNews}
         onPress={handleSearch}
       />
-      {news?.totalResults > 0 &&
-        news.articles.map((article: any, index: number) => (
-          <ThemedText key={index + article.publishedAt}>
-            {article.title}
-          </ThemedText>
-        ))}
+      <FlatList
+        data={news?.articles}
+        keyExtractor={(item, index) => `${index}-${item.publishedAt}`} // Unique key for each item
+        renderItem={({ item }) => <Article article={item} />}
+        contentContainerStyle={{ gap: 20 }}
+      />
     </ParallaxScrollView>
+  );
+}
+
+function Article({ article }: { article: any }) {
+  const { title, publishedAt, content, author } = article;
+  return (
+    <View style={{ gap: 10 }}>
+      <View style={{ gap: 2 }}>
+        <ThemedText type='subtitle'>{title}</ThemedText>
+        <ThemedText type='defaultSemiBold'>{author}</ThemedText>
+        <ThemedText type='defaultSemiBold'>{publishedAt}</ThemedText>
+      </View>
+      <ThemedText>{content}</ThemedText>
+    </View>
   );
 }
 
